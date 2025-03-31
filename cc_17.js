@@ -45,16 +45,45 @@ class VIPCustomer extends Customer {
     };
 }; // Creates VIP class with extended attributes
 
-// Test Cases
+// Task 4: Build a Client Report System
 const customer1 = new Customer ("Timmy Turner", "timaeusturnip@email.com"); // Creates new customer object
 customer1.addPurchase(485); // Adds purchase amount
 customer1.addPurchase(500); // Adds purchase amount to existing history
 console.log(`Customer Name: ${customer1.name}, Email: ${customer1.email}, Total Spent: $${customer1.getTotalSpent()}`); // Console logs customer information
 
-const salesRep1 = new SalesRep ("Ash Ketchum");
-salesRep1.addClient(customer1);
-salesRep1.getClientTotal("Timmy Turner");
+const customer2 = new Customer ("Eugene Krabs", "ilovemoney@email.com"); // Creates new customer object
+customer2.addPurchase(100); // Adds purchase amount
+customer2.addPurchase(200); // Adds purchase amount to existing history
+console.log(`Customer Name: ${customer2.name}, Email: ${customer2.email}, Total Spent: $${customer2.getTotalSpent()}`); // Console logs customer information
 
-const vipCust1 = new VIPCustomer ("Jimmy John", "jimothyjohnathon@email.com", "Gold")
-vipCust1.addPurchase(950)
-console.log(`VIP Customer Name: ${vipCust1.name}, Email: ${vipCust1.email}, Total Spent with Bonus: $${vipCust1.getTotalSpent()}`)
+const vipCust1 = new VIPCustomer ("Jimmy John", "jimothyjohnathon@email.com", "Gold"); // Creates new VIP customer object
+vipCust1.addPurchase(950); // Adds purchase amount
+console.log(`VIP Customer Name: ${vipCust1.name}, Email: ${vipCust1.email}, Total Spent with Bonus: $${vipCust1.getTotalSpent()}`); // Console logs VIP customer information
+
+const vipCust2 = new VIPCustomer ("Mario Luigi", "princessisinanothercastle@email.com", "Platinum"); // Creates new VIP customer object
+vipCust2.addPurchase(800); // Adds purchase amount
+console.log(`VIP Customer Name: ${vipCust2.name}, Email: ${vipCust2.email}, Total Spent with Bonus: $${vipCust2.getTotalSpent()}`); // Console logs VIP customer information
+
+const salesRep1 = new SalesRep ("Ash Ketchum"); // Creates new sales rep object
+salesRep1.addClient(customer1); // Assigns customer 1 to sales rep
+salesRep1.addClient(vipCust1); // Assigns VIP customer 1 to sales rep
+salesRep1.getClientTotal("Timmy Turner"); // Gets total from client named Timmy Turner
+
+const salesRep2 = new SalesRep ("Guy Fierri"); // Creates new sales rep object
+salesRep2.addClient(customer2); // Assigns customer 2 to sales rep
+salesRep2.addClient(vipCust2); // Assigns VIP customer 2 to sales rep
+salesRep2.getClientTotal("Eugene Krabs"); // Gets total from client named Eugene Krabs
+
+const allCustomers = [customer1, customer2, vipCust1, vipCust2]; // Converts all customers into an array
+
+const totalRevenue = allCustomers.reduce((total, client) => total + client.getTotalSpent(), 0) // Calculates total revenue from all customers
+console.log(`Total Customer Revenue: $${totalRevenue}`); // Outputs total revenue
+
+const highValueCustomers = allCustomers.filter(customer => customer.getTotalSpent() > 500); // Identifies customers who spent over $500
+console.log(`High Value Customers: ${highValueCustomers.map(customer => customer.name)}`); // Outputs high value customers
+
+const customerSummary = allCustomers.map(customer => ({ // Array of customer naems and total spent
+    name: customer.name,
+    "Total Spent": "$"+customer.getTotalSpent().toFixed(2)
+}));
+console.log("Customer Summary:", customerSummary); // Outputs customer summary
